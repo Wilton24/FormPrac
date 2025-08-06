@@ -1,6 +1,19 @@
+import { useState } from "react";
+
 export default function Login() {
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log('Login form submitted');
+
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <div className="control-row">
