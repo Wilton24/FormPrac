@@ -10,6 +10,9 @@ export default function Login() {
     }));
   };
 
+  const emailIsInvalid = credentials.email !== null && credentials.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email);
+
+
   function handleClearForm(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     setCredentials({ email: null, password: null });
@@ -29,6 +32,7 @@ export default function Login() {
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input onChange={(e: any) => onInputChange('email', e.target.value)} id="email" type="email" name="email" value={credentials.email || ''} />
+          <div className="control-error">{emailIsInvalid && <p>Please enter a valid email address.</p>}</div>
         </div>
 
         <div className="control no-margin">
