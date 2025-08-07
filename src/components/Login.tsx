@@ -1,21 +1,35 @@
 import React, { useState } from "react";
 
 export default function Login() {
-  const [credentials, setCredentials] = useState<{ email: string | null; password: string | null }>({ email: null, password: null });
+  const [credentials, setCredentials] = useState<{ email: string; password: string }>({ email: '', password: '' });
+  const [didEdit, setDidEdit] = useState<{ email: boolean; password: boolean }>({ email: false, password: false });
 
   function onInputChange(identifier: string, value: React.ChangeEvent<HTMLInputElement>) {
     setCredentials(prevState => ({
       ...prevState,
       [identifier]: value
     }));
+    setDidEdit(prevState => ({
+      ...prevState,
+      [identifier]: false
+    }));
   };
 
-  const emailIsInvalid = credentials.email !== null && credentials.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email);
+  // Simple email validation regex
+  // const emailIsInvalid = credentials.email !== null && credentials.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email);
+  const emailIsInvalid = didEdit.email && !credentials.email.includes('@');
 
+  // inputBlur function to handle input blur events
+  function inputBlur(identifier: any, event: React.FocusEvent<HTMLInputElement>) {
+    setDidEdit(prevState => ({
+      ...prevState,
+      [identifier]: true
+    }));
+  };
 
   function handleClearForm(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    setCredentials({ email: null, password: null });
+    setCredentials({ email: '', password: '' });
     console.log('Form cleared');
   };
 
@@ -31,7 +45,12 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input onChange={(e: any) => onInputChange('email', e.target.value)} id="email" type="email" name="email" value={credentials.email || ''} />
+          <input onChange={(e: any) => onInputChange('email', e.target.value)}
+            id="email"
+            type="email"
+            name="email"
+            value={credentials.email || ''}
+            onBlur={(e) => inputBlur('email', e)} />
           <div className="control-error">{emailIsInvalid && <p>Please enter a valid email address.</p>}</div>
         </div>
 
