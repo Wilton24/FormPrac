@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import Input from "./Input";
 
 export default function Login() {
   const [credentials, setCredentials] = useState<{ email: string; password: string }>({ email: '', password: '' });
   const [didEdit, setDidEdit] = useState<{ email: boolean; password: boolean }>({ email: false, password: false });
 
-  function onInputChange(identifier: string, value: React.ChangeEvent<HTMLInputElement>) {
+  function onInputChange(identifier: string, value: React.ChangeEvent<HTMLInputElement> | any) {
     setCredentials(prevState => ({
       ...prevState,
       [identifier]: value
@@ -43,7 +44,7 @@ export default function Login() {
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
+        {/* <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input onChange={(e: any) => onInputChange('email', e.target.value)}
             id="email"
@@ -52,12 +53,29 @@ export default function Login() {
             value={credentials.email || ''}
             onBlur={(e) => inputBlur('email', e)} />
           <div className="control-error">{emailIsInvalid && <p>Please enter a valid email address.</p>}</div>
-        </div>
+        </div> */}
+        <Input
+          label="Email"
+          type="email"
+          value={credentials.email}
+          onBlur={(e) => inputBlur('email', e)}
+          onInputChange={(identifier: string, value: string) => onInputChange(identifier, value)}
+          inputIsValid={emailIsInvalid}
+        />
 
-        <div className="control no-margin">
+
+        {/* <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input onChange={(e: any) => onInputChange('password', e.target.value)} id="password" type="password" name="password" value={credentials.password || ''} />
-        </div>
+        </div> */}
+        <Input
+          label="Password"
+          type="password"
+          value={credentials.password}
+          onBlur={(e) => inputBlur('password', e)}
+          onInputChange={(identifier: string, value: string) => onInputChange(identifier, value)}
+          inputIsValid={false} // Assuming no validation for password in this example
+        />
       </div>
 
       <p className="form-actions">
