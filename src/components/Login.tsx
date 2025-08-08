@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Input from "./Input";
+import { isEmail, isNotEmpty, hasMinLength, } from "../util/validation";
 
 export default function Login() {
   const [credentials, setCredentials] = useState<{ email: string; password: string }>({ email: '', password: '' });
@@ -18,7 +19,7 @@ export default function Login() {
 
   // Simple email validation regex
   // const emailIsInvalid = credentials.email !== null && credentials.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email);
-  const emailIsInvalid = didEdit.email && !credentials.email.includes('@');
+  const emailIsInvalid = didEdit.email && !isEmail(credentials.email) && isNotEmpty(credentials.email);
 
   // inputBlur function to handle input blur events
   function inputBlur(identifier: any, event: React.FocusEvent<HTMLInputElement>) {
