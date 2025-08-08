@@ -44,37 +44,26 @@ export default function Login() {
       <h2>Login</h2>
 
       <div className="control-row">
-        {/* <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input onChange={(e: any) => onInputChange('email', e.target.value)}
-            id="email"
-            type="email"
-            name="email"
-            value={credentials.email || ''}
-            onBlur={(e) => inputBlur('email', e)} />
-          <div className="control-error">{emailIsInvalid && <p>Please enter a valid email address.</p>}</div>
-        </div> */}
         <Input
           label="Email"
+          id="email"
           type="email"
-          value={credentials.email}
-          onBlur={(e) => inputBlur('email', e)}
-          onInputChange={(identifier: string, value: string) => onInputChange(identifier, value)}
+          name="email"
+          onBlur={(e: any) => inputBlur('email', e)}
+          onInputChange={(e: any) => onInputChange('email', e.target.value)}
           inputIsValid={emailIsInvalid}
+          value={credentials.email}
         />
 
-
-        {/* <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input onChange={(e: any) => onInputChange('password', e.target.value)} id="password" type="password" name="password" value={credentials.password || ''} />
-        </div> */}
         <Input
           label="Password"
           type="password"
+          name="password"
+          id="password"
+          onBlur={(e: any) => inputBlur('password', e)}
+          onInputChange={(e: any) => onInputChange('password', e.target.value)}
+          inputIsValid={false}
           value={credentials.password}
-          onBlur={(e) => inputBlur('password', e)}
-          onInputChange={(identifier: string, value: string) => onInputChange(identifier, value)}
-          inputIsValid={false} // Assuming no validation for password in this example
         />
       </div>
 
